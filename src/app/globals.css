@@ -1,0 +1,95 @@
+/* ─── Google Fonts ──────────────────────────────────────────────────────── */
+/* @import must come before @tailwind directives — required by CSS spec     */
+/* REPLACE: If you want to self-host fonts, remove this line and add font   */
+/*          files to /public/fonts/, then reference them with @font-face    */
+@import url('https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;800;900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── CSS Variables ─────────────────────────────────────────────────────── */
+:root {
+  --font-cormorant: 'Heebo', sans-serif;
+  --font-inter: 'Heebo', sans-serif;
+
+  --color-bg:      #080808;
+  --color-accent:  #c8a96c;
+  --color-text:    #e8e2d9;
+}
+
+/* ─── Base Reset ────────────────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  background-color: var(--color-bg);
+  /* Prevent horizontal overflow */
+  overflow-x: hidden;
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: 'Heebo', 'Inter', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* ─── Custom Scrollbar ──────────────────────────────────────────────────── */
+::-webkit-scrollbar        { width: 3px; }
+::-webkit-scrollbar-track  { background: #080808; }
+::-webkit-scrollbar-thumb  { background: #252525; border-radius: 2px; }
+::-webkit-scrollbar-thumb:hover { background: #333; }
+
+/* ─── Selection ─────────────────────────────────────────────────────────── */
+::selection {
+  background: rgba(200, 169, 108, 0.25);
+  color: var(--color-text);
+}
+
+/* ─── Utility: Film-grain overlay ──────────────────────────────────────── */
+/* Applied via a pseudo-element in components that need the grain texture */
+.grain::after {
+  content: '';
+  position: fixed;
+  inset: -200%;
+  width: 400%;
+  height: 400%;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+  opacity: 0.025;
+  pointer-events: none;
+  z-index: 9999;
+  animation: grain-shift 0.5s steps(1) infinite;
+}
+
+@keyframes grain-shift {
+  0%   { transform: translate(0, 0); }
+  20%  { transform: translate(-5%, -10%); }
+  40%  { transform: translate(-15%, 5%); }
+  60%  { transform: translate(7%, -25%); }
+  80%  { transform: translate(-5%, 10%); }
+  100% { transform: translate(10%, -5%); }
+}
+
+/* ─── Utility: Section label ────────────────────────────────────────────── */
+.section-label {
+  font-family: var(--font-inter);
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;   /* reduced — wide tracking looks wrong in Hebrew */
+  color: var(--color-accent);
+}
+
+/* ─── Utility: Horizontal rule with fade ───────────────────────────────── */
+.rule-fade {
+  height: 1px;
+  background: linear-gradient(to right, transparent, #2e2e2e 30%, #2e2e2e 70%, transparent);
+}
