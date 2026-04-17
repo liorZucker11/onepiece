@@ -91,7 +91,7 @@ function ProjectCard({
   index: number;
 }) {
   const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, margin: '-60px' });
+  const inView = useInView(ref, { once: false, margin: '-60px' });
   const isLarge = project.size === 'large';
 
   return (
@@ -102,8 +102,8 @@ function ProjectCard({
         isLarge ? 'sm:col-span-2' : '',
         isLarge ? 'aspect-[2/1]' : 'aspect-[4/3]',
       ].join(' ')}
-      initial={{ opacity: 0, y: 32 }}
-      animate={inView ? { opacity: 1, y: 0 } : {}}
+      initial={{ opacity: 0, y: 60, scale: 0.97 }}
+      animate={inView ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 56, scale: 0.97 }}
       transition={{ duration: 0.8, delay: (index % 3) * 0.1, ease: [0.22, 1, 0.36, 1] }}
     >
       {/* REPLACE: הוסף תמונה אמיתית:
@@ -159,7 +159,7 @@ function ProjectCard({
 export default function Projects() {
   const [activeFilter, setActiveFilter] = useState<Category>('הכל');
   const headRef = useRef<HTMLDivElement>(null);
-  const inView  = useInView(headRef, { once: true, margin: '-80px' });
+  const inView  = useInView(headRef, { once: false, margin: '-80px' });
 
   const filtered =
     activeFilter === 'הכל'
@@ -174,8 +174,8 @@ export default function Projects() {
 
         <div ref={headRef} className="mb-14">
           <motion.div
-            initial={{ opacity: 0, y: 28 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
+            initial={{ opacity: 0, y: 56, scale: 0.97 }}
+            animate={inView ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 56, scale: 0.97 }}
             transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1] }}
           >
             <span className="section-label block mb-5">תיק עבודות</span>
@@ -193,8 +193,8 @@ export default function Projects() {
         {/* פילטר קטגוריות */}
         <motion.div
           className="flex flex-wrap gap-2 mb-12"
-          initial={{ opacity: 0, y: 16 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
+          initial={{ opacity: 0, y: 44, scale: 0.97 }}
+          animate={inView ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 56, scale: 0.97 }}
           transition={{ duration: 0.7, delay: 0.18, ease: [0.22, 1, 0.36, 1] }}
         >
           {CATEGORIES.map((cat) => (
@@ -230,8 +230,8 @@ export default function Projects() {
 
         <motion.div
           className="mt-16 flex justify-center"
-          initial={{ opacity: 0, y: 16 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
+          initial={{ opacity: 0, y: 44, scale: 0.97 }}
+          animate={inView ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 56, scale: 0.97 }}
           transition={{ duration: 0.7, delay: 0.35 }}
         >
           <button

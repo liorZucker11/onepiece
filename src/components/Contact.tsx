@@ -40,8 +40,8 @@ function Field({
   return (
     <motion.div
       className="flex flex-col gap-2"
-      initial={{ opacity: 0, y: 20 }}
-      animate={inView ? { opacity: 1, y: 0 } : {}}
+      initial={{ opacity: 0, y: 52, scale: 0.97 }}
+      animate={inView ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 56, scale: 0.97 }}
       transition={{ duration: 0.7, delay, ease: [0.22, 1, 0.36, 1] }}
     >
       <label className="font-sans text-[11px] text-[#7a7672]">
@@ -60,7 +60,7 @@ const selectClass =
 
 export default function Contact() {
   const sectionRef = useRef<HTMLElement>(null);
-  const inView     = useInView(sectionRef, { once: true, margin: '-80px' });
+  const inView     = useInView(sectionRef, { once: false, margin: '-80px' });
 
   const [formState, setFormState] = useState({
     name: '', email: '', company: '', service: '', message: '',
@@ -87,11 +87,10 @@ export default function Contact() {
           {/* ── שמאל: כותרת + פרטי קשר ── */}
           <div className="lg:col-span-4">
             <motion.div
-              initial={{ opacity: 0, y: 28 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
+              initial={{ opacity: 0, y: 56, scale: 0.97 }}
+              animate={inView ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 56, scale: 0.97 }}
               transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1] }}
             >
-              <span className="section-label block mb-5">בואו נדבר</span>
               <h2
                 className="font-serif font-light leading-[1.1] text-[#e8e2d9] mb-8"
                 style={{ fontSize: 'clamp(2.4rem, 4.5vw, 3.8rem)' }}
@@ -107,8 +106,8 @@ export default function Contact() {
 
             <motion.div
               className="space-y-6"
-              initial={{ opacity: 0, y: 20 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
+              initial={{ opacity: 0, y: 52, scale: 0.97 }}
+              animate={inView ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 56, scale: 0.97 }}
               transition={{ duration: 0.7, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
             >
               <div className="border-t border-[#282828] pt-5">
@@ -224,8 +223,8 @@ export default function Contact() {
                 </Field>
 
                 <motion.div
-                  initial={{ opacity: 0, y: 16 }}
-                  animate={inView ? { opacity: 1, y: 0 } : {}}
+                  initial={{ opacity: 0, y: 44, scale: 0.97 }}
+                  animate={inView ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 56, scale: 0.97 }}
                   transition={{ duration: 0.7, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
                   className="flex items-center justify-between gap-6 pt-2"
                 >

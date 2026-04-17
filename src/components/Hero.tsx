@@ -69,7 +69,7 @@ export default function Hero() {
           playsInline
           preload="auto"
           className="w-full h-full object-cover"
-          src="/background%20web.mp4"
+          src="https://pub-89c442ddd6cf4d069c34410d67fb2569.r2.dev/background%20web.mp4"
         />
       </motion.div>
 

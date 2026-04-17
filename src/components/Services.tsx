@@ -56,14 +56,14 @@ function ServiceCard({
   index: number;
 }) {
   const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, margin: '-60px' });
+  const inView = useInView(ref, { once: false, margin: '-60px' });
 
   return (
     <motion.div
       ref={ref}
       className="group relative border-t border-[#282828] pt-8 pb-10 hover:border-[#c8a96c]/30 transition-colors duration-500"
-      initial={{ opacity: 0, y: 28 }}
-      animate={inView ? { opacity: 1, y: 0 } : {}}
+      initial={{ opacity: 0, y: 56, scale: 0.97 }}
+      animate={inView ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 56, scale: 0.97 }}
       transition={{ duration: 0.7, delay: (index % 3) * 0.08, ease: [0.22, 1, 0.36, 1] }}
     >
       <span className="font-sans text-[11px] text-[#2a2520] mb-5 block">
@@ -102,7 +102,7 @@ function ServiceCard({
 
 export default function Services() {
   const headRef = useRef<HTMLDivElement>(null);
-  const inView  = useInView(headRef, { once: true, margin: '-80px' });
+  const inView  = useInView(headRef, { once: false, margin: '-80px' });
 
   return (
     <section id="services" className="relative py-32 lg:py-48 bg-[#080808]">
@@ -115,11 +115,10 @@ export default function Services() {
           className="flex flex-col lg:flex-row lg:items-end justify-between gap-8 mb-20"
         >
           <motion.div
-            initial={{ opacity: 0, y: 28 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
+            initial={{ opacity: 0, y: 56, scale: 0.97 }}
+            animate={inView ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 56, scale: 0.97 }}
             transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1] }}
           >
-            <span className="section-label block mb-5">מה אנחנו עושים</span>
             <h2
               className="font-serif font-light leading-[1.1] text-[#e8e2d9]"
               style={{ fontSize: 'clamp(2.6rem, 5.5vw, 4.2rem)' }}
@@ -132,8 +131,8 @@ export default function Services() {
 
           <motion.p
             className="max-w-xs font-sans text-[13px] font-light leading-[1.9] text-[#7a7672] lg:text-left"
-            initial={{ opacity: 0, y: 20 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
+            initial={{ opacity: 0, y: 52, scale: 0.97 }}
+            animate={inView ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 56, scale: 0.97 }}
             transition={{ duration: 0.8, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
           >
             כל שירות מסופק כפתרון פרימיום ומלא — מיישור הברייף ועד מסירת הקבצים הסופיים.

@@ -9,7 +9,6 @@ const NAV_LINKS = [
   { href: 'services', label: 'שירותים' },
   { href: 'projects', label: 'פרויקטים' },
   { href: 'process',  label: 'תהליך'   },
-  { href: 'contact',  label: 'צור קשר' },
 ] as const;
 
 function Logo({ onClick }: { onClick: () => void }) {
@@ -89,12 +88,24 @@ export default function Navigation() {
         transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
       >
         <div className="max-w-screen-xl mx-auto px-6 lg:px-10">
-          <div className="flex items-center justify-between h-16 lg:h-20">
+          <div className="flex items-center justify-between h-16 lg:h-20" dir="ltr">
 
             <Logo onClick={scrollToTop} />
 
             {/* Desktop links */}
-            <nav className="hidden lg:flex items-center gap-10">
+            <nav className="hidden lg:flex items-center gap-10" dir="rtl">
+              {/* Home button */}
+              <button
+                onClick={scrollToTop}
+                className="text-[#c8a96c] hover:text-[#e8e2d9] transition-colors duration-300"
+                aria-label="חזרה לראש הדף"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M3 9.75L12 3l9 6.75V21a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.75z"/>
+                  <polyline points="9 22 9 12 15 12 15 22"/>
+                </svg>
+              </button>
+
               {NAV_LINKS.map(({ href, label }) => (
                 <button
                   key={href}
@@ -148,44 +159,33 @@ export default function Navigation() {
                 }`}
               />
             </button>
+
           </div>
         </div>
       </motion.header>
 
-      {/* ─── Mobile Full-Screen Menu ─────────────────────────────────────── */}
+      {/* ─── Mobile Dropdown (outside header to avoid clipping) ──────────── */}
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
-            className="fixed inset-0 z-40 bg-[#080808] flex flex-col items-center justify-center gap-10"
-            initial={{ opacity: 0, clipPath: 'inset(0 0 100% 0)' }}
-            animate={{ opacity: 1, clipPath: 'inset(0 0 0% 0)' }}
-            exit={{ opacity: 0, clipPath: 'inset(0 0 100% 0)' }}
-            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+            className="fixed top-[68px] right-4 z-50 bg-[#0e0e0e] border border-[#1e1e1e] shadow-xl shadow-black/60 flex flex-col min-w-[170px]"
+            initial={{ opacity: 0, y: -6, scale: 0.97 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -6, scale: 0.97 }}
+            transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
           >
-            <span className="section-label mb-4">ניווט</span>
-
             {NAV_LINKS.map(({ href, label }, i) => (
               <motion.button
                 key={href}
                 onClick={() => scrollTo(href)}
-                className="font-serif font-light text-5xl text-[#e8e2d9] hover:text-[#c8a96c] transition-colors duration-300"
-                initial={{ opacity: 0, y: 24 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, delay: 0.1 + i * 0.07 }}
+                className="px-6 py-3.5 font-sans text-[12px] tracking-[0.15em] text-[#8a8480] hover:text-[#e8e2d9] hover:bg-[#161616] transition-colors duration-200 text-right border-b border-[#1a1a1a] last:border-b-0"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.15, delay: i * 0.04 }}
               >
                 {label}
               </motion.button>
             ))}
-
-            <motion.button
-              onClick={() => scrollTo('contact')}
-              className="mt-6 px-10 py-3.5 border border-[#c8a96c]/60 text-[#c8a96c] font-sans text-[13px]"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.55 }}
-            >
-              צור קשר
-            </motion.button>
           </motion.div>
         )}
       </AnimatePresence>
