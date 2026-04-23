@@ -56,15 +56,15 @@ export default function About() {
           <Reveal delay={0.12}>
             <p className="font-sans text-[15px] font-light leading-[2.1] text-[#c8c4c0]">
               {isHe
-                ? 'OnePiece הוא סטודיו בוטיק להדמיות אדריכליות, הפועל מתוך אמונה שכל פרויקט מתחיל בסיפור. אני לא רק מציג מבנים — אני יוצר תחושה, אווירה וחזון עוד לפני שהפרויקט נבנה.'
-                : 'OnePiece is a boutique architectural visualization studio, operating from the belief that every project begins with a story. I don\'t just present buildings — I create a feeling, atmosphere and vision before the project is even built.'}
+                ? 'OnePiece הוא סטודיו בוטיק להדמיות אדריכליות, הפועל מתוך אמונה שכל פרויקט מתחיל בסיפור. הסטודיו אינו מסתפק בהצגת מבנים — הוא יוצר תחושה, אווירה וחזון עוד לפני שהפרויקט נבנה.'
+                : 'OnePiece is a boutique architectural visualization studio, operating from the belief that every project begins with a story. The studio doesn\'t settle for presenting buildings — it creates a feeling, atmosphere and vision before the project is even built.'}
             </p>
           </Reveal>
           <Reveal delay={0.2}>
             <p className="font-sans text-[15px] font-light leading-[2.1] text-[#c8c4c0]">
               {isHe
-                ? 'כל פרויקט עבורי הוא סיפור ייחודי. דרך שילוב של חשיבה אדריכלית והבנה שיווקית, אני מייצר הדמיות שמחברות אנשים לפרויקט ומעבירות אותו בצורה ברורה, מדויקת ומשכנעת.'
-                : 'Every project for me is a unique story. Through a combination of architectural thinking and marketing understanding, I produce visualizations that connect people to the project and convey it clearly, precisely and persuasively.'}
+                ? 'עבור OnePiece, כל פרויקט הוא סיפור ייחודי. באמצעות שילוב של חשיבה אדריכלית והבנה שיווקית, הסטודיו מייצר הדמיות שמחברות אנשים לפרויקט ומעבירות אותו בצורה ברורה, מדויקת ומשכנעת.'
+                : 'For OnePiece, every project is a unique story. Through a combination of architectural thinking and marketing understanding, the studio produces visualizations that connect people to the project and convey it clearly, precisely and persuasively.'}
             </p>
           </Reveal>
         </div>

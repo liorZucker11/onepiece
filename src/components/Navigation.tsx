@@ -36,7 +36,7 @@ export default function Navigation() {
 
   const NAV_LINKS = [
     { href: 'about',    label: isHe ? 'אודות'   : 'About'   },
-    { href: 'projects', label: isHe ? 'שירותים' : 'Services' },
+    { href: 'projects', label: isHe ? 'גלריה' : 'Gallery' },
     { href: 'process',  label: isHe ? 'תהליך'   : 'Process'  },
   ] as const;
 

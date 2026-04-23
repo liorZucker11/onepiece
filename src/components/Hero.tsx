@@ -93,7 +93,7 @@ export default function Hero() {
             onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
             className="w-48 sm:w-auto px-9 py-3.5 bg-[#c8a96c] text-[#080808] font-sans text-[11px] tracking-[0.28em] uppercase hover:bg-[#d4b97c] transition-colors duration-300"
           >
-            {isHe ? 'פרויקטים' : 'Projects'}
+            {isHe ? 'גלריה' : 'Gallery'}
           </button>
           <button
             onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}

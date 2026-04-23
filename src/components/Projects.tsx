@@ -298,7 +298,7 @@ export default function Projects() {
               animate={inView ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 56, scale: 0.97 }}
               transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1] }}
             >
-              <span className="section-label block mb-5">{isHe ? 'תיק עבודות' : 'Portfolio'}</span>
+              <span className="section-label block mb-5">{isHe ? 'גלריה' : 'Gallery'}</span>
               <h2
                 className="font-serif font-light leading-[1.1] text-[#ffffff]"
                 style={{ fontSize: 'clamp(2.6rem, 5.5vw, 4.2rem)' }}
