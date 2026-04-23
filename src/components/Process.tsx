@@ -110,9 +110,6 @@ export default function Process() {
         </div>
       </div>
 
-      <div className="absolute bottom-0 right-4 pointer-events-none overflow-hidden select-none" aria-hidden>
-        <span className="font-serif font-thin text-[14rem] leading-none text-[#0c0c0c]">03</span>
-      </div>
     </section>
   );
 }

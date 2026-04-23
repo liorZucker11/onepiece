@@ -135,19 +135,39 @@ const CATEGORY_LABELS: Record<Category, { he: string; en: string }> = {
   'סיור וירטואלי': { he: 'סיור וירטואלי', en: 'Virtual Tour' },
 };
 
-function Lightbox({ project, onClose }: { project: Project; onClose: () => void }) {
+function Lightbox({
+  project,
+  currentIndex,
+  total,
+  onClose,
+  onPrev,
+  onNext,
+}: {
+  project: Project;
+  currentIndex: number;
+  total: number;
+  onClose: () => void;
+  onPrev: (() => void) | null;
+  onNext: (() => void) | null;
+}) {
   const isVideo = project.mediaType === 'video';
   const isTour  = project.mediaType === 'tour';
 
   useEffect(() => {
-    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape')                    onClose();
+      if (e.key === 'ArrowLeft'  && onPrev) onPrev();
+      if (e.key === 'ArrowRight' && onNext) onNext();
+    };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, [onClose]);
+  }, [onClose, onPrev, onNext]);
+
+  const navBtn = 'absolute top-1/2 -translate-y-1/2 z-20 w-10 h-10 flex items-center justify-center text-[#c0bcb8] hover:text-[#ffffff] transition-colors duration-200 border border-[#282828] hover:border-[#505050] bg-[#080808]/80 disabled:opacity-20';
 
   return (
     <motion.div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 lg:p-10"
+      className="fixed inset-0 z-[60] flex items-center justify-center p-4 lg:p-10"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
@@ -157,39 +177,73 @@ function Lightbox({ project, onClose }: { project: Project; onClose: () => void 
         className="absolute inset-0 bg-[#080808]/92 backdrop-blur-sm"
         onClick={onClose}
       />
-      <motion.div
-        className={[
-          'relative z-10 w-full flex items-center justify-center',
-          isTour ? 'max-w-6xl h-[85vh]' : 'max-w-5xl max-h-[90vh]',
-        ].join(' ')}
-        initial={{ scale: 0.94, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        exit={{ scale: 0.94, opacity: 0 }}
-        transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+
+      {/* ── Prev ── */}
+      <button
+        onClick={onPrev ?? undefined}
+        disabled={!onPrev}
+        className={`${navBtn} left-3 lg:left-6`}
+        aria-label="הקודם"
       >
-        {isTour ? (
-          <iframe
-            src={project.tourUrl}
-            className="w-full h-full border-0"
-            allowFullScreen
-            allow="xr-spatial-tracking; gyroscope; accelerometer"
-          />
-        ) : isVideo ? (
-          <video
-            src={project.image}
-            controls
-            autoPlay
-            className="max-w-full max-h-[90vh] w-auto h-auto"
-          />
-        ) : (
-          <img
-            src={project.image}
-            alt=""
-            role="presentation"
-            className="max-w-full max-h-[90vh] w-auto h-auto object-contain"
-          />
-        )}
-      </motion.div>
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+
+      {/* ── Next ── */}
+      <button
+        onClick={onNext ?? undefined}
+        disabled={!onNext}
+        className={`${navBtn} right-3 lg:right-6`}
+        aria-label="הבא"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+
+      {/* ── Content ── */}
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={project.id}
+          className={[
+            'relative z-10 w-full flex items-center justify-center',
+            isTour ? 'max-w-6xl h-[85vh]' : 'max-w-5xl max-h-[90vh]',
+          ].join(' ')}
+          initial={{ opacity: 0, scale: 0.97 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 0.97 }}
+          transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+        >
+          {isTour ? (
+            <iframe
+              src={project.tourUrl}
+              className="w-full h-full border-0"
+              allowFullScreen
+              allow="xr-spatial-tracking; gyroscope; accelerometer"
+            />
+          ) : isVideo ? (
+            <video
+              src={project.image}
+              controls
+              autoPlay
+              className="max-w-full max-h-[90vh] w-auto h-auto"
+            />
+          ) : (
+            <img
+              src={project.image}
+              alt=""
+              role="presentation"
+              className="max-w-full max-h-[90vh] w-auto h-auto object-contain"
+            />
+          )}
+        </motion.div>
+      </AnimatePresence>
+
+      {/* ── Counter ── */}
+      {total > 1 && (
+        <div className="absolute bottom-5 left-1/2 -translate-x-1/2 z-20 font-sans text-[11px] tracking-widest text-[#c0bcb8]">
+          {currentIndex + 1} / {total}
+        </div>
+      )}
+
+      {/* ── Close ── */}
       <button
         onClick={onClose}
         className="absolute top-5 right-5 z-20 w-10 h-10 flex items-center justify-center text-[#c0bcb8] hover:text-[#ffffff] transition-colors duration-200 border border-[#282828] hover:border-[#505050] bg-[#080808]/60"
@@ -203,7 +257,7 @@ function Lightbox({ project, onClose }: { project: Project; onClose: () => void 
 
 export default function Projects() {
   const [activeFilter, setActiveFilter] = useState<Category>('הכל');
-  const [lightbox, setLightbox] = useState<Project | null>(null);
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
   const headRef  = useRef<HTMLDivElement>(null);
   const inView   = useInView(headRef, { once: false, margin: '-80px' });
   const { lang } = useLanguage();
@@ -214,10 +268,23 @@ export default function Projects() {
       ? PROJECTS
       : PROJECTS.filter((p) => p.category === activeFilter);
 
+  const lightboxProject = lightboxIndex !== null ? filtered[lightboxIndex] : null;
+  const onPrev = lightboxIndex !== null && lightboxIndex > 0 ? () => setLightboxIndex(lightboxIndex - 1) : null;
+  const onNext = lightboxIndex !== null && lightboxIndex < filtered.length - 1 ? () => setLightboxIndex(lightboxIndex + 1) : null;
+
   return (
     <>
       <AnimatePresence>
-        {lightbox && <Lightbox project={lightbox} onClose={() => setLightbox(null)} />}
+        {lightboxProject && (
+          <Lightbox
+            project={lightboxProject}
+            currentIndex={lightboxIndex!}
+            total={filtered.length}
+            onClose={() => setLightboxIndex(null)}
+            onPrev={onPrev}
+            onNext={onNext}
+          />
+        )}
       </AnimatePresence>
 
       <section id="projects" className="relative py-32 lg:py-48 bg-[#080808]">
@@ -279,11 +346,11 @@ export default function Projects() {
               {filtered.map((project, i) => (
                 <motion.div
                   key={project.id}
-                  className="break-inside-avoid mb-3 lg:mb-4 group cursor-pointer overflow-hidden"
+                  className={`break-inside-avoid mb-3 lg:mb-4 group cursor-pointer overflow-hidden${project.mediaType === 'tour' ? ' [column-span:all]' : ''}`}
                   initial={{ opacity: 0, y: 40 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: (i % 3) * 0.08, ease: [0.22, 1, 0.36, 1] }}
-                  onClick={() => setLightbox(project)}
+                  onClick={() => setLightboxIndex(i)}
                 >
                   {project.mediaType === 'tour' ? (
                     <div className="aspect-video bg-[#0e0e0e] border border-[#1e1e1e] flex flex-col items-center justify-center gap-4 transition-all duration-500 group-hover:border-[#c8a96c]/40">
@@ -340,9 +407,6 @@ export default function Projects() {
           </motion.div>
         </div>
 
-        <div className="absolute bottom-0 right-4 pointer-events-none overflow-hidden select-none" aria-hidden>
-          <span className="font-serif font-thin text-[14rem] leading-none text-[#0c0c0c]">02</span>
-        </div>
       </section>
     </>
   );

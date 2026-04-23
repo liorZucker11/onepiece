@@ -78,11 +78,17 @@ function AccessibilityIcon() {
 }
 
 export default function AccessibilityMenu() {
-  const [open,    setOpen]    = useState(false);
-  const [state,   setState]   = useState<State>(INITIAL);
-  const [showDecl, setShowDecl] = useState(false);
+  const [open,      setOpen]      = useState(false);
+  const [state,     setState]     = useState<State>(INITIAL);
+  const [showDecl,  setShowDecl]  = useState(false);
+  const [hasOpened, setHasOpened] = useState(false);
   const { lang } = useLanguage();
   const isHe = lang === 'he';
+
+  const handleOpen = () => {
+    setOpen((o) => !o);
+    if (!hasOpened) setHasOpened(true);
+  };
 
   useEffect(() => {
     const html = document.documentElement;
@@ -103,14 +109,14 @@ export default function AccessibilityMenu() {
 
   return (
     <>
-      {/* ── כפתור צף ── */}
+      {/* ── כפתור צף — מתקפל פנימה כשהפאנל פתוח ── */}
       <motion.button
-        onClick={() => setOpen((o) => !o)}
-        className="fixed left-0 top-1/2 -translate-y-1/2 z-50 flex flex-col items-center justify-center gap-1.5 w-10 bg-[#0f0f0f] border border-[#c8a96c]/50 border-l-0 py-4 text-[#c8a96c] hover:bg-[#141414] hover:border-[#c8a96c] transition-all duration-300 shadow-lg shadow-black/60"
+        onClick={handleOpen}
+        className={`fixed left-0 top-1/2 -translate-y-1/2 z-50 flex flex-col items-center justify-center gap-1.5 w-10 bg-[#0f0f0f] border border-[#c8a96c]/50 border-l-0 py-4 text-[#c8a96c] hover:bg-[#141414] hover:border-[#c8a96c] transition-colors duration-300 shadow-lg shadow-black/60 ${open ? 'pointer-events-none' : ''}`}
         aria-label={isHe ? 'תפריט נגישות' : 'Accessibility menu'}
-        initial={{ opacity: 0, x: -40 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.5, delay: 2, ease: [0.22, 1, 0.36, 1] }}
+        initial={{ opacity: 0, x: -48 }}
+        animate={{ opacity: open ? 0 : 1, x: open ? -48 : 0 }}
+        transition={{ duration: 0.35, delay: hasOpened ? 0 : 2, ease: [0.22, 1, 0.36, 1] }}
       >
         <AccessibilityIcon />
         <span
@@ -121,7 +127,7 @@ export default function AccessibilityMenu() {
         </span>
       </motion.button>
 
-      {/* ── פאנל ── */}
+      {/* ── פאנל — מחליק החוצה מהשמאל ── */}
       <AnimatePresence>
         {open && (
           <>
@@ -134,11 +140,11 @@ export default function AccessibilityMenu() {
             />
 
             <motion.div
-              className="fixed left-10 top-1/2 -translate-y-1/2 z-50 w-72 bg-[#0e0e0e] border border-[#1e1e1e] shadow-2xl shadow-black/70 flex flex-col"
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -20 }}
-              transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+              className="fixed left-0 top-1/2 -translate-y-1/2 z-50 w-56 bg-[#0e0e0e] border border-[#1e1e1e] shadow-2xl shadow-black/70 flex flex-col"
+              initial={{ x: -240 }}
+              animate={{ x: 0 }}
+              exit={{ x: -240 }}
+              transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
               dir="rtl"
             >
               {/* כותרת */}

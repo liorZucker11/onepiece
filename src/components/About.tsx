@@ -127,12 +127,12 @@ export default function About() {
         </div>
 
         <Reveal delay={0.1}>
-          <div className="-mt-6 flex items-center justify-between relative z-10">
+          <div className="-mt-6 relative z-10 flex flex-wrap gap-x-5 gap-y-3 justify-center lg:flex-nowrap lg:justify-between lg:items-center lg:gap-0">
             {qualities.map((q, i) => (
               <Fragment key={q}>
-                <span className="font-sans text-[13px] font-light text-[#c8a96c] whitespace-nowrap">{q}</span>
+                <span className="font-sans text-[12px] lg:text-[13px] font-light text-[#c8a96c]">{q}</span>
                 {i < qualities.length - 1 && (
-                  <span className="w-2 h-2 rounded-full bg-[#c8a96c] flex-shrink-0" aria-hidden />
+                  <span className="hidden lg:inline-block w-2 h-2 rounded-full bg-[#c8a96c] flex-shrink-0" aria-hidden />
                 )}
               </Fragment>
             ))}
@@ -141,9 +141,6 @@ export default function About() {
 
       </div>
 
-      <div className="absolute bottom-0 right-4 pointer-events-none overflow-hidden select-none" aria-hidden>
-        <span className="font-serif font-thin text-[14rem] leading-none text-[#0c0c0c]">01</span>
-      </div>
     </section>
   );
 }
