@@ -132,7 +132,7 @@ const CATEGORY_LABELS: Record<Category, { he: string; en: string }> = {
   'פנים':         { he: 'פנים',         en: 'Interior'     },
   'גרפיקה':       { he: 'גרפיקה',       en: 'Graphics'     },
   'אנימציה':      { he: 'אנימציה',      en: 'Animation'    },
-  'סיור וירטואלי': { he: 'סיור וירטואלי', en: 'Virtual Tour' },
+  'סיור וירטואלי': { he: '360°', en: '360°' },
 };
 
 function Lightbox({
@@ -346,20 +346,20 @@ export default function Projects() {
               {filtered.map((project, i) => (
                 <motion.div
                   key={project.id}
-                  className={`break-inside-avoid mb-3 lg:mb-4 group cursor-pointer overflow-hidden${project.mediaType === 'tour' ? ' [column-span:all]' : ''}`}
+                  className="break-inside-avoid mb-3 lg:mb-4 group cursor-pointer overflow-hidden"
                   initial={{ opacity: 0, y: 40 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: (i % 3) * 0.08, ease: [0.22, 1, 0.36, 1] }}
                   onClick={() => setLightboxIndex(i)}
                 >
                   {project.mediaType === 'tour' ? (
-                    <div className="aspect-video bg-[#0e0e0e] border border-[#1e1e1e] flex flex-col items-center justify-center gap-4 transition-all duration-500 group-hover:border-[#c8a96c]/40">
-                      <div className="w-14 h-14 rounded-full border border-[#c8a96c]/40 flex items-center justify-center group-hover:border-[#c8a96c]/80 transition-colors duration-300">
-                        <span className="font-sans text-[11px] tracking-widest text-[#c8a96c]">360°</span>
+                    <div className="aspect-square bg-[#0e0e0e] border border-[#1e1e1e] flex flex-col items-center justify-center gap-3 transition-all duration-500 group-hover:border-[#c8a96c]/40">
+                      <div className="w-10 h-10 lg:w-14 lg:h-14 rounded-full border border-[#c8a96c]/40 flex items-center justify-center group-hover:border-[#c8a96c]/80 transition-colors duration-300">
+                        <span className="font-sans text-[9px] lg:text-[11px] tracking-widest text-[#c8a96c]">360°</span>
                       </div>
-                      <div className="text-center px-4">
-                        <p className="font-sans text-[12px] text-[#ffffff] mb-1">{project.title}</p>
-                        <p className="font-sans text-[10px] text-[#c0bcb8]">{project.location}</p>
+                      <div className="text-center px-3">
+                        <p className="font-sans text-[10px] leading-snug text-[#ffffff] mb-1">{project.title}</p>
+                        <p className="font-sans text-[9px] text-[#c0bcb8]">{project.location}</p>
                       </div>
                       <p className="font-sans text-[10px] tracking-[0.15em] text-[#c8a96c]/60 group-hover:text-[#c8a96c] transition-colors duration-300">
                         {isHe ? 'לחץ לצפייה' : 'Click to View'}
