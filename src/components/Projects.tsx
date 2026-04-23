@@ -1,165 +1,213 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { motion, useInView, AnimatePresence } from 'framer-motion';
+import { useLanguage } from '@/contexts/LanguageContext';
 
-// REPLACE: החלף בנתוני הפרויקטים האמיתיים שלך, כולל תמונות ב-/public/images/projects/
-const PROJECTS = [
+type ProjectData = {
+  id: number;
+  title: string;
+  category: string;
+  location: string;
+  image: string;
+  mediaType?: 'image' | 'video' | 'tour';
+  tourUrl?: string;
+};
+
+const PROJECTS: ProjectData[] = [
   {
     id: 1,
-    title: 'מגדל מרידיאן',
+    title: 'Azure Bay Residences',
     category: 'חוץ',
-    location: 'וורשה, פולין',
-    year: '2024',
-    image: null,
-    gradientFrom: '#0e0c0a',
-    gradientTo: '#181410',
-    accentColor: 'rgba(200,169,108,0.08)',
-    size: 'large',
+    location: 'ישראל',
+    image: 'https://pub-89c442ddd6cf4d069c34410d67fb2569.r2.dev/%D7%94%D7%93%D7%9E%D7%99%D7%95%D7%AA%20%D7%97%D7%95%D7%A5/Azure_Bay_Residences_pool.jpg',
   },
   {
     id: 2,
-    title: 'רזידנס K',
-    category: 'פנים',
-    location: 'קרקוב, פולין',
-    year: '2024',
-    image: null,
-    gradientFrom: '#0a0e0c',
-    gradientTo: '#0d1210',
-    accentColor: 'rgba(120,160,140,0.06)',
-    size: 'small',
+    title: 'Eden Curve Residences',
+    category: 'חוץ',
+    location: 'ישראל',
+    image: 'https://pub-89c442ddd6cf4d069c34410d67fb2569.r2.dev/%D7%94%D7%93%D7%9E%D7%99%D7%95%D7%AA%20%D7%97%D7%95%D7%A5/Eden_Curve_Residences_front.jpg',
   },
   {
     id: 3,
-    title: 'שער הנמל',
-    category: 'אנימציה',
-    location: 'גדנסק, פולין',
-    year: '2023',
-    image: null,
-    gradientFrom: '#0a0c10',
-    gradientTo: '#0d1016',
-    accentColor: 'rgba(80,110,160,0.06)',
-    size: 'small',
+    title: 'Eden Curve Residences',
+    category: 'חוץ',
+    location: 'ישראל',
+    image: 'https://pub-89c442ddd6cf4d069c34410d67fb2569.r2.dev/%D7%94%D7%93%D7%9E%D7%99%D7%95%D7%AA%20%D7%97%D7%95%D7%A5/Eden_Curve_Residences_exterior_loby.jpg',
   },
   {
     id: 4,
-    title: 'הפביליון',
+    title: 'Parkline Heights Tower',
     category: 'חוץ',
-    location: 'ברלין, גרמניה',
-    year: '2023',
-    image: null,
-    gradientFrom: '#100e0a',
-    gradientTo: '#161210',
-    accentColor: 'rgba(200,169,108,0.06)',
-    size: 'large',
+    location: 'ישראל',
+    image: 'https://pub-89c442ddd6cf4d069c34410d67fb2569.r2.dev/%D7%94%D7%93%D7%9E%D7%99%D7%95%D7%AA%20%D7%97%D7%95%D7%A5/Parkline%20Heights%20Tower.jpg',
   },
   {
     id: 5,
-    title: 'סדרת לופט',
-    category: 'פנים',
-    location: 'פוזנן, פולין',
-    year: '2023',
-    image: null,
-    gradientFrom: '#0e0a0a',
-    gradientTo: '#140e0e',
-    accentColor: 'rgba(180,120,100,0.06)',
-    size: 'small',
+    title: 'Parkline Heights Tower',
+    category: 'חוץ',
+    location: 'ישראל',
+    image: 'https://pub-89c442ddd6cf4d069c34410d67fb2569.r2.dev/%D7%94%D7%93%D7%9E%D7%99%D7%95%D7%AA%20%D7%97%D7%95%D7%A5/Parkline%20Heights%20Tower_top.jpg',
   },
   {
     id: 6,
-    title: 'הרובע העירוני',
-    category: 'סיור וירטואלי',
-    location: 'ורוצלב, פולין',
-    year: '2022',
-    image: null,
-    gradientFrom: '#0a0c0e',
-    gradientTo: '#0e1014',
-    accentColor: 'rgba(100,130,180,0.06)',
-    size: 'small',
+    title: 'The Illuminated City Peak',
+    category: 'חוץ',
+    location: 'ישראל',
+    image: 'https://pub-89c442ddd6cf4d069c34410d67fb2569.r2.dev/%D7%94%D7%93%D7%9E%D7%99%D7%95%D7%AA%20%D7%97%D7%95%D7%A5/The_Illuminated_City_Peak.jpg',
   },
-] as const;
+  {
+    id: 7,
+    title: 'Urban Breeze',
+    category: 'חוץ',
+    location: 'ישראל',
+    image: 'https://pub-89c442ddd6cf4d069c34410d67fb2569.r2.dev/%D7%94%D7%93%D7%9E%D7%99%D7%95%D7%AA%20%D7%97%D7%95%D7%A5/Urban_Breeze.jpg',
+  },
+  {
+    id: 8,
+    title: 'The Cube',
+    category: 'חוץ',
+    location: 'ישראל',
+    image: 'https://pub-89c442ddd6cf4d069c34410d67fb2569.r2.dev/%D7%94%D7%93%D7%9E%D7%99%D7%95%D7%AA%20%D7%97%D7%95%D7%A5/the_cube_buildings_drone.jpg',
+  },
+  {
+    id: 9,
+    title: 'The Cube',
+    category: 'חוץ',
+    location: 'ישראל',
+    image: 'https://pub-89c442ddd6cf4d069c34410d67fb2569.r2.dev/%D7%94%D7%93%D7%9E%D7%99%D7%95%D7%AA%20%D7%97%D7%95%D7%A5/the_cube_buildings_human.jpg',
+  },
+  {
+    id: 10,
+    title: 'Robin',
+    category: 'חוץ',
+    location: 'הרצליה פיתוח',
+    image: 'https://pub-89c442ddd6cf4d069c34410d67fb2569.r2.dev/%D7%94%D7%93%D7%9E%D7%99%D7%95%D7%AA%20%D7%97%D7%95%D7%A5/robin_herzelya_pituah.jpg',
+  },
+  { id: 11, title: 'Interior Render',          category: 'פנים', location: 'ישראל',         image: 'https://pub-89c442ddd6cf4d069c34410d67fb2569.r2.dev/%D7%94%D7%93%D7%9E%D7%99%D7%95%D7%AA%20%D7%A4%D7%A0%D7%99%D7%9D/3.png' },
+  { id: 12, title: 'Azure Bay Residences',     category: 'פנים', location: 'ישראל',         image: 'https://pub-89c442ddd6cf4d069c34410d67fb2569.r2.dev/%D7%94%D7%93%D7%9E%D7%99%D7%95%D7%AA%20%D7%A4%D7%A0%D7%99%D7%9D/Azure_Bay_Residences_balcony.jpg' },
+  { id: 13, title: 'Azure Bay Residences',     category: 'פנים', location: 'ישראל',         image: 'https://pub-89c442ddd6cf4d069c34410d67fb2569.r2.dev/%D7%94%D7%93%D7%9E%D7%99%D7%95%D7%AA%20%D7%A4%D7%A0%D7%99%D7%9D/Azure_Bay_Residences_spa.jpg' },
+  { id: 14, title: 'Azure Bay Residences',     category: 'פנים', location: 'ישראל',         image: 'https://pub-89c442ddd6cf4d069c34410d67fb2569.r2.dev/%D7%94%D7%93%D7%9E%D7%99%D7%95%D7%AA%20%D7%A4%D7%A0%D7%99%D7%9D/Azure_Bay_Residences_resturant.jpg' },
+  { id: 15, title: 'Eden Curve Residences',    category: 'פנים', location: 'ישראל',         image: 'https://pub-89c442ddd6cf4d069c34410d67fb2569.r2.dev/%D7%94%D7%93%D7%9E%D7%99%D7%95%D7%AA%20%D7%A4%D7%A0%D7%99%D7%9D/Eden_Curve_Residences_interior_loby_people.jpg' },
+  { id: 16, title: 'Eden Curve Residences',    category: 'פנים', location: 'ישראל',         image: 'https://pub-89c442ddd6cf4d069c34410d67fb2569.r2.dev/%D7%94%D7%93%D7%9E%D7%99%D7%95%D7%AA%20%D7%A4%D7%A0%D7%99%D7%9D/Eden_Curve_Residences_bed_room.jpg' },
+  { id: 17, title: 'Eden Curve Residences',    category: 'פנים', location: 'ישראל',         image: 'https://pub-89c442ddd6cf4d069c34410d67fb2569.r2.dev/%D7%94%D7%93%D7%9E%D7%99%D7%95%D7%AA%20%D7%A4%D7%A0%D7%99%D7%9D/Eden_Curve_Residences_balcony.jpg' },
+  { id: 18, title: 'Interior Render',          category: 'פנים', location: 'ישראל',         image: 'https://pub-89c442ddd6cf4d069c34410d67fb2569.r2.dev/%D7%94%D7%93%D7%9E%D7%99%D7%95%D7%AA%20%D7%A4%D7%A0%D7%99%D7%9D/Generated%20Image%20April%2015%2C%202026%20-%2010_21AM.jpg' },
+  { id: 19, title: 'Interior Render',          category: 'פנים', location: 'ישראל',         image: 'https://pub-89c442ddd6cf4d069c34410d67fb2569.r2.dev/%D7%94%D7%93%D7%9E%D7%99%D7%95%D7%AA%20%D7%A4%D7%A0%D7%99%D7%9D/Generated%20Image%20April%2015%2C%202026%20-%2010_22AM.jpg' },
+  { id: 20, title: 'Interior Render',          category: 'פנים', location: 'ישראל',         image: 'https://pub-89c442ddd6cf4d069c34410d67fb2569.r2.dev/%D7%94%D7%93%D7%9E%D7%99%D7%95%D7%AA%20%D7%A4%D7%A0%D7%99%D7%9D/Generated%20Image%20April%2015%2C%202026%20-%2010_25AM.jpg' },
+  { id: 21, title: 'Interior Render',          category: 'פנים', location: 'ישראל',         image: 'https://pub-89c442ddd6cf4d069c34410d67fb2569.r2.dev/%D7%94%D7%93%D7%9E%D7%99%D7%95%D7%AA%20%D7%A4%D7%A0%D7%99%D7%9D/Generated%20Image%20April%2015%2C%202026%20-%2010_23AM.jpg' },
+  { id: 22, title: 'Interior Render',          category: 'פנים', location: 'ישראל',         image: 'https://pub-89c442ddd6cf4d069c34410d67fb2569.r2.dev/%D7%94%D7%93%D7%9E%D7%99%D7%95%D7%AA%20%D7%A4%D7%A0%D7%99%D7%9D/Generated%20Image%20April%2015%2C%202026%20-%2010_29AM.jpg' },
+  { id: 23, title: 'Interior Render',          category: 'פנים', location: 'ישראל',         image: 'https://pub-89c442ddd6cf4d069c34410d67fb2569.r2.dev/%D7%94%D7%93%D7%9E%D7%99%D7%95%D7%AA%20%D7%A4%D7%A0%D7%99%D7%9D/Generated%20Image%20April%2015%2C%202026%20-%2010_31AM.jpg' },
+  { id: 24, title: 'Interior Render',          category: 'פנים', location: 'ישראל',         image: 'https://pub-89c442ddd6cf4d069c34410d67fb2569.r2.dev/%D7%94%D7%93%D7%9E%D7%99%D7%95%D7%AA%20%D7%A4%D7%A0%D7%99%D7%9D/Generated%20Image%20April%2015%2C%202026%20-%2010_34AM.jpg' },
+  { id: 25, title: 'Interior Render',          category: 'פנים', location: 'ישראל',         image: 'https://pub-89c442ddd6cf4d069c34410d67fb2569.r2.dev/%D7%94%D7%93%D7%9E%D7%99%D7%95%D7%AA%20%D7%A4%D7%A0%D7%99%D7%9D/Generated%20Image%20April%2015%2C%202026%20-%2012_14PM.jpg' },
+  { id: 26, title: 'Interior Render',          category: 'פנים', location: 'ישראל',         image: 'https://pub-89c442ddd6cf4d069c34410d67fb2569.r2.dev/%D7%94%D7%93%D7%9E%D7%99%D7%95%D7%AA%20%D7%A4%D7%A0%D7%99%D7%9D/Generated%20Image%20April%2015%2C%202026%20-%2010_59AM.jpg' },
+  { id: 27, title: 'Interior Render',          category: 'פנים', location: 'ישראל',         image: 'https://pub-89c442ddd6cf4d069c34410d67fb2569.r2.dev/%D7%94%D7%93%D7%9E%D7%99%D7%95%D7%AA%20%D7%A4%D7%A0%D7%99%D7%9D/Generated%20Image%20April%2022%2C%202026%20-%208_31PM.jpg' },
+  { id: 28, title: 'Parkline Heights Tower',   category: 'פנים', location: 'ישראל',         image: 'https://pub-89c442ddd6cf4d069c34410d67fb2569.r2.dev/%D7%94%D7%93%D7%9E%D7%99%D7%95%D7%AA%20%D7%A4%D7%A0%D7%99%D7%9D/Parkline%20Heights%20Tower_office.jpg' },
+  { id: 29, title: 'The Illuminated City Peak',category: 'פנים', location: 'ישראל',         image: 'https://pub-89c442ddd6cf4d069c34410d67fb2569.r2.dev/%D7%94%D7%93%D7%9E%D7%99%D7%95%D7%AA%20%D7%A4%D7%A0%D7%99%D7%9D/The_Illuminated_City_Peak_resturant.jpg' },
+  { id: 30, title: 'Urban Breeze',             category: 'פנים', location: 'ישראל',         image: 'https://pub-89c442ddd6cf4d069c34410d67fb2569.r2.dev/%D7%94%D7%93%D7%9E%D7%99%D7%95%D7%AA%20%D7%A4%D7%A0%D7%99%D7%9D/Urban%20Breeze_interiors.jpg' },
+  { id: 31, title: 'The Cube',                 category: 'פנים', location: 'ישראל',         image: 'https://pub-89c442ddd6cf4d069c34410d67fb2569.r2.dev/%D7%94%D7%93%D7%9E%D7%99%D7%95%D7%AA%20%D7%A4%D7%A0%D7%99%D7%9D/the_cube_buildings_GYM.jpg' },
+  { id: 32, title: 'The Cube',                 category: 'פנים', location: 'ישראל',         image: 'https://pub-89c442ddd6cf4d069c34410d67fb2569.r2.dev/%D7%94%D7%93%D7%9E%D7%99%D7%95%D7%AA%20%D7%A4%D7%A0%D7%99%D7%9D/the_cube_buildings_penthouse.jpg' },
+  { id: 33, title: 'The Cube',                 category: 'פנים', location: 'ישראל',         image: 'https://pub-89c442ddd6cf4d069c34410d67fb2569.r2.dev/%D7%94%D7%93%D7%9E%D7%99%D7%95%D7%AA%20%D7%A4%D7%A0%D7%99%D7%9D/the_cube_buildings_bed_room.jpg' },
+  { id: 34, title: 'Graphic Design', category: 'גרפיקה', location: 'ישראל', image: 'https://pub-89c442ddd6cf4d069c34410d67fb2569.r2.dev/%D7%92%D7%A8%D7%A4%D7%99%D7%A7%D7%94/AP%209.jpg' },
+  { id: 35, title: 'Graphic Design', category: 'גרפיקה', location: 'ישראל', image: 'https://pub-89c442ddd6cf4d069c34410d67fb2569.r2.dev/%D7%92%D7%A8%D7%A4%D7%99%D7%A7%D7%94/FLOOR_02.jpg' },
+  { id: 36, title: 'Graphic Design', category: 'גרפיקה', location: 'ישראל', image: 'https://pub-89c442ddd6cf4d069c34410d67fb2569.r2.dev/%D7%92%D7%A8%D7%A4%D7%99%D7%A7%D7%94/Generated%20Image%20April%2012%2C%202026%20-%202_05PM.jpg' },
+  { id: 37, title: 'Graphic Design', category: 'גרפיקה', location: 'ישראל', image: 'https://pub-89c442ddd6cf4d069c34410d67fb2569.r2.dev/%D7%92%D7%A8%D7%A4%D7%99%D7%A7%D7%94/Generated%20Image%20April%2015%2C%202026%20-%201_52PM.jpg' },
+  { id: 38, title: 'Graphic Design', category: 'גרפיקה', location: 'ישראל', image: 'https://pub-89c442ddd6cf4d069c34410d67fb2569.r2.dev/%D7%92%D7%A8%D7%A4%D7%99%D7%A7%D7%94/Generated%20Image%20April%2015%2C%202026%20-%202_00PM.jpg' },
+  { id: 39, title: 'Graphic Design', category: 'גרפיקה', location: 'ישראל', image: 'https://pub-89c442ddd6cf4d069c34410d67fb2569.r2.dev/%D7%92%D7%A8%D7%A4%D7%99%D7%A7%D7%94/all%201%20copy.jpg' },
+  { id: 40, title: 'Graphic Design', category: 'גרפיקה', location: 'ישראל', image: 'https://pub-89c442ddd6cf4d069c34410d67fb2569.r2.dev/%D7%92%D7%A8%D7%A4%D7%99%D7%A7%D7%94/b2%20copy.jpg' },
+  { id: 41, title: 'Graphic Design', category: 'גרפיקה', location: 'ישראל', image: 'https://pub-89c442ddd6cf4d069c34410d67fb2569.r2.dev/%D7%92%D7%A8%D7%A4%D7%99%D7%A7%D7%94/%D7%A7%D7%95%D7%9E%D7%94%20%D7%A8%D7%91%D7%99%D7%A2%D7%99%D7%AA%20%D7%93%D7%99%D7%A8%D7%94%20%D7%9E%D7%A1\'%2012.jpg' },
+  { id: 42, title: 'Graphic Design', category: 'גרפיקה', location: 'ישראל', image: 'https://pub-89c442ddd6cf4d069c34410d67fb2569.r2.dev/%D7%92%D7%A8%D7%A4%D7%99%D7%A7%D7%94/%D7%A7%D7%95%D7%9E%D7%AA%20%D7%A7%D7%A8%D7%A7%D7%A2%20%D7%93%D7%99%D7%A8%D7%94%20%D7%9E%D7%A1\'%201.jpg' },
+  { id: 43, title: 'רובין הרצליה',   category: 'אנימציה', location: 'הרצליה', image: 'https://pub-89c442ddd6cf4d069c34410d67fb2569.r2.dev/%D7%A1%D7%A8%D7%98%D7%95%D7%A0%D7%99%D7%9D/%D7%A8%D7%95%D7%91%D7%99%D7%9F%20%D7%94%D7%A8%D7%A6%D7%9C%D7%99%D7%94.mp4', mediaType: 'video' },
+  { id: 44, title: 'גבעת אולגה',     category: 'אנימציה', location: 'ישראל',  image: 'https://pub-89c442ddd6cf4d069c34410d67fb2569.r2.dev/%D7%A1%D7%A8%D7%98%D7%95%D7%A0%D7%99%D7%9D/givat%20olga.mp4', mediaType: 'video' },
+  { id: 45, title: 'סיור וירטואלי — רובין הרצליה', category: 'סיור וירטואלי', location: 'הרצליה פיתוח', image: '', mediaType: 'tour', tourUrl: 'https://app.seekbeak.com/v/rNj7DdoZqJd' },
+];
 
-type Category = 'הכל' | 'חוץ' | 'פנים' | 'אנימציה' | 'סיור וירטואלי' | 'תוכניות שיווק';
+type Project = ProjectData;
+type Category = 'הכל' | 'חוץ' | 'פנים' | 'גרפיקה' | 'אנימציה' | 'סיור וירטואלי';
+const CATEGORIES: Category[] = ['הכל', 'חוץ', 'פנים', 'גרפיקה', 'אנימציה', 'סיור וירטואלי'];
 
-const CATEGORIES: Category[] = ['הכל', 'חוץ', 'פנים', 'אנימציה', 'סיור וירטואלי', 'תוכניות שיווק'];
+const CATEGORY_LABELS: Record<Category, { he: string; en: string }> = {
+  'הכל':          { he: 'הכל',          en: 'All'          },
+  'חוץ':          { he: 'חוץ',          en: 'Exterior'     },
+  'פנים':         { he: 'פנים',         en: 'Interior'     },
+  'גרפיקה':       { he: 'גרפיקה',       en: 'Graphics'     },
+  'אנימציה':      { he: 'אנימציה',      en: 'Animation'    },
+  'סיור וירטואלי': { he: 'סיור וירטואלי', en: 'Virtual Tour' },
+};
 
-function ProjectCard({
-  project,
-  index,
-}: {
-  project: (typeof PROJECTS)[number];
-  index: number;
-}) {
-  const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: false, margin: '-60px' });
-  const isLarge = project.size === 'large';
+function Lightbox({ project, onClose }: { project: Project; onClose: () => void }) {
+  const isVideo = project.mediaType === 'video';
+  const isTour  = project.mediaType === 'tour';
+
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [onClose]);
 
   return (
     <motion.div
-      ref={ref}
-      className={[
-        'group relative overflow-hidden cursor-pointer',
-        isLarge ? 'sm:col-span-2' : '',
-        isLarge ? 'aspect-[2/1]' : 'aspect-[4/3]',
-      ].join(' ')}
-      initial={{ opacity: 0, y: 60, scale: 0.97 }}
-      animate={inView ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 56, scale: 0.97 }}
-      transition={{ duration: 0.8, delay: (index % 3) * 0.1, ease: [0.22, 1, 0.36, 1] }}
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 lg:p-10"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.3 }}
     >
-      {/* REPLACE: הוסף תמונה אמיתית:
-          <Image src={project.image} alt={project.title} fill className="object-cover" /> */}
-      <div
-        className="absolute inset-0 transition-transform duration-700 ease-out group-hover:scale-105"
-        style={{
-          background: `linear-gradient(135deg, ${project.gradientFrom} 0%, ${project.gradientTo} 100%)`,
-        }}
+      <motion.div
+        className="absolute inset-0 bg-[#080808]/92 backdrop-blur-sm"
+        onClick={onClose}
+      />
+      <motion.div
+        className={[
+          'relative z-10 w-full flex items-center justify-center',
+          isTour ? 'max-w-6xl h-[85vh]' : 'max-w-5xl max-h-[90vh]',
+        ].join(' ')}
+        initial={{ scale: 0.94, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        exit={{ scale: 0.94, opacity: 0 }}
+        transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
       >
-        <div
-          className="absolute inset-0"
-          style={{
-            background: `radial-gradient(ellipse 60% 50% at 40% 50%, ${project.accentColor} 0%, transparent 70%)`,
-          }}
-        />
-        <div
-          className="absolute inset-0 opacity-[0.07]"
-          style={{
-            backgroundImage:
-              'linear-gradient(#1e1e1e 1px, transparent 1px), linear-gradient(90deg, #1e1e1e 1px, transparent 1px)',
-            backgroundSize: '64px 64px',
-          }}
-        />
-        <div className="absolute inset-0 flex items-center justify-center opacity-20">
-          <span className="font-sans text-[10px] text-[#3a3530]">
-            החלף בתמונת פרויקט
-          </span>
-        </div>
-      </div>
-
-      <div className="absolute inset-0 bg-gradient-to-t from-[#080808]/90 via-[#080808]/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-
-      <div className="absolute inset-x-0 bottom-0 p-6 lg:p-8 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 ease-out">
-        <p className="section-label mb-2">{project.category}</p>
-        <h3 className="font-serif font-light text-2xl lg:text-3xl text-[#e8e2d9] leading-tight mb-2">
-          {project.title}
-        </h3>
-        <div className="flex items-center gap-3">
-          <span className="font-sans text-[11px] text-[#6a6460]">{project.location}</span>
-          <span className="h-px w-4 bg-[#3a3530]" />
-          <span className="font-sans text-[11px] text-[#7a7672]">{project.year}</span>
-        </div>
-      </div>
-
-      <div className="absolute top-5 left-5 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-        <div className="w-5 h-5 border-t border-l border-[#c8a96c]/50" />
-      </div>
+        {isTour ? (
+          <iframe
+            src={project.tourUrl}
+            className="w-full h-full border-0"
+            allowFullScreen
+            allow="xr-spatial-tracking; gyroscope; accelerometer"
+          />
+        ) : isVideo ? (
+          <video
+            src={project.image}
+            controls
+            autoPlay
+            className="max-w-full max-h-[90vh] w-auto h-auto"
+          />
+        ) : (
+          <img
+            src={project.image}
+            alt=""
+            role="presentation"
+            className="max-w-full max-h-[90vh] w-auto h-auto object-contain"
+          />
+        )}
+      </motion.div>
+      <button
+        onClick={onClose}
+        className="absolute top-5 right-5 z-20 w-10 h-10 flex items-center justify-center text-[#c0bcb8] hover:text-[#ffffff] transition-colors duration-200 border border-[#282828] hover:border-[#505050] bg-[#080808]/60"
+        aria-label="סגור"
+      >
+        ✕
+      </button>
     </motion.div>
   );
 }
 
 export default function Projects() {
   const [activeFilter, setActiveFilter] = useState<Category>('הכל');
-  const headRef = useRef<HTMLDivElement>(null);
-  const inView  = useInView(headRef, { once: false, margin: '-80px' });
+  const [lightbox, setLightbox] = useState<Project | null>(null);
+  const headRef  = useRef<HTMLDivElement>(null);
+  const inView   = useInView(headRef, { once: false, margin: '-80px' });
+  const { lang } = useLanguage();
+  const isHe     = lang === 'he';
 
   const filtered =
     activeFilter === 'הכל'
@@ -167,87 +215,135 @@ export default function Projects() {
       : PROJECTS.filter((p) => p.category === activeFilter);
 
   return (
-    <section id="projects" className="relative py-32 lg:py-48 bg-[#080808]">
-      <div className="rule-fade absolute top-0 inset-x-0" />
+    <>
+      <AnimatePresence>
+        {lightbox && <Lightbox project={lightbox} onClose={() => setLightbox(null)} />}
+      </AnimatePresence>
 
-      <div className="max-w-screen-xl mx-auto px-6 lg:px-10">
+      <section id="projects" className="relative py-32 lg:py-48 bg-[#080808]">
+        <div className="rule-fade absolute top-0 inset-x-0" />
 
-        <div ref={headRef} className="mb-14">
-          <motion.div
-            initial={{ opacity: 0, y: 56, scale: 0.97 }}
-            animate={inView ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 56, scale: 0.97 }}
-            transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1] }}
-          >
-            <span className="section-label block mb-5">תיק עבודות</span>
-            <h2
-              className="font-serif font-light leading-[1.1] text-[#e8e2d9]"
-              style={{ fontSize: 'clamp(2.6rem, 5.5vw, 4.2rem)' }}
+        <div className="max-w-screen-xl mx-auto px-6 lg:px-10">
+
+          <div ref={headRef} className="mb-14">
+            <motion.div
+              initial={{ opacity: 0, y: 56, scale: 0.97 }}
+              animate={inView ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 56, scale: 0.97 }}
+              transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1] }}
             >
-              עבודות
-              <br />
-              <span className="font-bold text-[#c8a96c]">נבחרות</span>
-            </h2>
+              <span className="section-label block mb-5">{isHe ? 'תיק עבודות' : 'Portfolio'}</span>
+              <h2
+                className="font-serif font-light leading-[1.1] text-[#ffffff]"
+                style={{ fontSize: 'clamp(2.6rem, 5.5vw, 4.2rem)' }}
+              >
+                {isHe ? (
+                  <>מגוון שלם<br />של שירותים <span className="font-bold text-[#c8a96c]">ויזואלים</span></>
+                ) : (
+                  <>A Complete Range<br />of <span className="font-bold text-[#c8a96c]">Visual Services</span></>
+                )}
+              </h2>
+            </motion.div>
+          </div>
+
+          <motion.div
+            className="flex flex-wrap gap-2 mb-12"
+            initial={{ opacity: 0, y: 44, scale: 0.97 }}
+            animate={inView ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 56, scale: 0.97 }}
+            transition={{ duration: 0.7, delay: 0.18, ease: [0.22, 1, 0.36, 1] }}
+          >
+            {CATEGORIES.map((cat) => (
+              <button
+                key={cat}
+                onClick={() => setActiveFilter(cat)}
+                className={[
+                  'font-sans text-[11px] px-4 py-2.5 border transition-all duration-300',
+                  activeFilter === cat
+                    ? 'border-[#c8a96c]/60 text-[#c8a96c] bg-[#c8a96c]/05'
+                    : 'border-[#282828] text-[#c0bcb8] hover:border-[#2a2a2a] hover:text-[#ffffff]',
+                ].join(' ')}
+              >
+                {CATEGORY_LABELS[cat][lang]}
+              </button>
+            ))}
+          </motion.div>
+
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activeFilter}
+              className="columns-2 lg:columns-3 gap-3 lg:gap-4"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.4 }}
+            >
+              {filtered.map((project, i) => (
+                <motion.div
+                  key={project.id}
+                  className="break-inside-avoid mb-3 lg:mb-4 group cursor-pointer overflow-hidden"
+                  initial={{ opacity: 0, y: 40 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: (i % 3) * 0.08, ease: [0.22, 1, 0.36, 1] }}
+                  onClick={() => setLightbox(project)}
+                >
+                  {project.mediaType === 'tour' ? (
+                    <div className="aspect-video bg-[#0e0e0e] border border-[#1e1e1e] flex flex-col items-center justify-center gap-4 transition-all duration-500 group-hover:border-[#c8a96c]/40">
+                      <div className="w-14 h-14 rounded-full border border-[#c8a96c]/40 flex items-center justify-center group-hover:border-[#c8a96c]/80 transition-colors duration-300">
+                        <span className="font-sans text-[11px] tracking-widest text-[#c8a96c]">360°</span>
+                      </div>
+                      <div className="text-center px-4">
+                        <p className="font-sans text-[12px] text-[#ffffff] mb-1">{project.title}</p>
+                        <p className="font-sans text-[10px] text-[#c0bcb8]">{project.location}</p>
+                      </div>
+                      <p className="font-sans text-[10px] tracking-[0.15em] text-[#c8a96c]/60 group-hover:text-[#c8a96c] transition-colors duration-300">
+                        {isHe ? 'לחץ לצפייה' : 'Click to View'}
+                      </p>
+                    </div>
+                  ) : project.mediaType === 'video' ? (
+                    <div className="aspect-video overflow-hidden">
+                      <video
+                        src={project.image}
+                        autoPlay
+                        muted
+                        loop
+                        playsInline
+                        className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                      />
+                    </div>
+                  ) : (
+                    <img
+                      src={project.image}
+                      alt=""
+                      role="presentation"
+                      className="w-full h-auto block transition-transform duration-700 ease-out group-hover:scale-105"
+                    />
+                  )}
+                </motion.div>
+              ))}
+            </motion.div>
+          </AnimatePresence>
+
+          <motion.div
+            className="mt-16 flex justify-center"
+            initial={{ opacity: 0, y: 44, scale: 0.97 }}
+            whileInView={{ opacity: 1, y: 0, scale: 1 }}
+            viewport={{ once: true, margin: '-40px' }}
+            transition={{ duration: 0.7 }}
+          >
+            <button
+              onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
+              className="group flex items-center gap-4 font-sans text-[12px] text-[#c0bcb8] hover:text-[#c8a96c] transition-colors duration-300"
+            >
+              <span className="h-px w-8 bg-[#2a2520] group-hover:bg-[#c8a96c]/60 transition-colors duration-300" />
+              {isHe ? 'פנה אלינו לגבי פרויקט' : 'Contact Us About a Project'}
+              <span className="h-px w-8 bg-[#2a2520] group-hover:bg-[#c8a96c]/60 transition-colors duration-300" />
+            </button>
           </motion.div>
         </div>
 
-        {/* פילטר קטגוריות */}
-        <motion.div
-          className="flex flex-wrap gap-2 mb-12"
-          initial={{ opacity: 0, y: 44, scale: 0.97 }}
-          animate={inView ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 56, scale: 0.97 }}
-          transition={{ duration: 0.7, delay: 0.18, ease: [0.22, 1, 0.36, 1] }}
-        >
-          {CATEGORIES.map((cat) => (
-            <button
-              key={cat}
-              onClick={() => setActiveFilter(cat)}
-              className={[
-                'font-sans text-[11px] px-4 py-2.5 border transition-all duration-300',
-                activeFilter === cat
-                  ? 'border-[#c8a96c]/60 text-[#c8a96c] bg-[#c8a96c]/05'
-                  : 'border-[#282828] text-[#7a7672] hover:border-[#2a2a2a] hover:text-[#8a8480]',
-              ].join(' ')}
-            >
-              {cat}
-            </button>
-          ))}
-        </motion.div>
-
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={activeFilter}
-            className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 lg:gap-4"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.4 }}
-          >
-            {filtered.map((project, i) => (
-              <ProjectCard key={project.id} project={project} index={i} />
-            ))}
-          </motion.div>
-        </AnimatePresence>
-
-        <motion.div
-          className="mt-16 flex justify-center"
-          initial={{ opacity: 0, y: 44, scale: 0.97 }}
-          animate={inView ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 56, scale: 0.97 }}
-          transition={{ duration: 0.7, delay: 0.35 }}
-        >
-          <button
-            onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
-            className="group flex items-center gap-4 font-sans text-[12px] text-[#7a7672] hover:text-[#c8a96c] transition-colors duration-300"
-          >
-            <span className="h-px w-8 bg-[#2a2520] group-hover:bg-[#c8a96c]/60 transition-colors duration-300" />
-            פנה אלינו לגבי פרויקט
-            <span className="h-px w-8 bg-[#2a2520] group-hover:bg-[#c8a96c]/60 transition-colors duration-300" />
-          </button>
-        </motion.div>
-      </div>
-
-      <div className="absolute bottom-0 right-4 pointer-events-none overflow-hidden select-none" aria-hidden>
-        <span className="font-serif font-thin text-[14rem] leading-none text-[#0c0c0c]">03</span>
-      </div>
-    </section>
+        <div className="absolute bottom-0 right-4 pointer-events-none overflow-hidden select-none" aria-hidden>
+          <span className="font-serif font-thin text-[14rem] leading-none text-[#0c0c0c]">02</span>
+        </div>
+      </section>
+    </>
   );
 }

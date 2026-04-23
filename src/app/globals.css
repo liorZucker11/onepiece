@@ -15,7 +15,7 @@
 
   --color-bg:      #080808;
   --color-accent:  #c8a96c;
-  --color-text:    #e8e2d9;
+  --color-text:    #ffffff;
 }
 
 /* ─── Base Reset ────────────────────────────────────────────────────────── */
@@ -87,6 +87,36 @@ body {
   letter-spacing: 0.12em;   /* reduced — wide tracking looks wrong in Hebrew */
   color: var(--color-accent);
 }
+
+/* ─── Skip navigation ───────────────────────────────────────────────────── */
+.skip-nav {
+  position: absolute;
+  top: -100%;
+  left: 1rem;
+  z-index: 9999;
+  padding: 0.75rem 1.5rem;
+  background: #c8a96c;
+  color: #080808;
+  font-family: sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: top 0.2s;
+}
+.skip-nav:focus { top: 1rem; }
+
+/* ─── Focus indicators ──────────────────────────────────────────────────── */
+:focus-visible {
+  outline: 2px solid #c8a96c;
+  outline-offset: 3px;
+}
+
+/* ─── Accessibility overrides ──────────────────────────────────────────── */
+html.acc-large-text          { font-size: 120%; }
+html.acc-grayscale           { filter: grayscale(100%); }
+html.acc-underline-links a   { text-decoration: underline !important; }
+html.acc-readable-font,
+html.acc-readable-font *     { font-family: Arial, Helvetica, sans-serif !important; }
 
 /* ─── Utility: Horizontal rule with fade ───────────────────────────────── */
 .rule-fade {
