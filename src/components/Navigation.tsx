@@ -13,7 +13,7 @@ export default function Navigation() {
   const NAV_LINKS = [
     { href: 'about',    label: isHe ? 'אודות'   : 'About'   },
     { href: 'projects', label: isHe ? 'גלריה' : 'Gallery' },
-    { href: 'process',  label: isHe ? 'תהליך'   : 'Process'  },
+    { href: 'process',  label: isHe ? 'שלבי עבודה' : 'How We Work'  },
   ] as const;
 
   const [scrolled,      setScrolled]      = useState(false);
@@ -151,18 +151,38 @@ export default function Navigation() {
             exit={{ opacity: 0, y: -6, scale: 0.97 }}
             transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
           >
+            <motion.button
+              onClick={scrollToTop}
+              className={`px-6 py-3.5 font-sans text-[12px] tracking-[0.15em] text-[#c8c4c0] hover:text-[#ffffff] hover:bg-[#161616] transition-colors duration-200 border-b border-[#1a1a1a] ${isHe ? 'text-right' : 'text-left'}`}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.15, delay: 0 }}
+            >
+              {isHe ? 'בית' : 'Home'}
+            </motion.button>
+
             {NAV_LINKS.map(({ href, label }, i) => (
               <motion.button
                 key={href}
                 onClick={() => scrollTo(href)}
-                className={`px-6 py-3.5 font-sans text-[12px] tracking-[0.15em] text-[#c8c4c0] hover:text-[#ffffff] hover:bg-[#161616] transition-colors duration-200 border-b border-[#1a1a1a] last:border-b-0 ${isHe ? 'text-right' : 'text-left'}`}
+                className={`px-6 py-3.5 font-sans text-[12px] tracking-[0.15em] text-[#c8c4c0] hover:text-[#ffffff] hover:bg-[#161616] transition-colors duration-200 border-b border-[#1a1a1a] ${isHe ? 'text-right' : 'text-left'}`}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                transition={{ duration: 0.15, delay: i * 0.04 }}
+                transition={{ duration: 0.15, delay: (i + 1) * 0.04 }}
               >
                 {label}
               </motion.button>
             ))}
+
+            <motion.button
+              onClick={() => scrollTo('contact')}
+              className={`px-6 py-3.5 font-sans text-[12px] tracking-[0.15em] text-[#c8a96c] hover:text-[#d4b97c] hover:bg-[#161616] transition-colors duration-200 ${isHe ? 'text-right' : 'text-left'}`}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.15, delay: (NAV_LINKS.length + 1) * 0.04 }}
+            >
+              {isHe ? 'צור קשר' : 'Contact'}
+            </motion.button>
           </motion.div>
         )}
       </AnimatePresence>
