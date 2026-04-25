@@ -8,7 +8,7 @@ const FOOTER_LINKS = {
   social: [
     { label: 'Instagram', href: 'https://www.instagram.com/minzbergaviv/' },
     { label: 'LinkedIn',  href: 'https://www.linkedin.com/in/aviv-minzberg-1799772a8' },
-    { label: 'Behance',   href: 'https://www.behance.net/avivminzbergOP' },
+    { label: 'Behance',   href: 'https://www.behance.net/oneviz' },
   ],
 };
 
