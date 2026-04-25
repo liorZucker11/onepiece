@@ -96,10 +96,10 @@ export default function Navigation() {
             {/* ── Logo ── */}
             <button onClick={scrollToTop} className="flex items-center gap-3 group" aria-label="Go to top">
               <div className="w-8 h-8 border border-[#c8a96c]/60 flex items-center justify-center group-hover:border-[#c8a96c] transition-colors duration-300 flex-shrink-0">
-                <span className="font-serif text-[11px] text-[#c8a96c] leading-none select-none tracking-wide">OP</span>
+                <span className="font-serif text-[11px] text-[#c8a96c] leading-none select-none tracking-wide">OV</span>
               </div>
               <span className="hidden sm:block font-sans text-[11px] tracking-[0.15em] text-[#ffffff]/80 group-hover:text-[#ffffff] transition-colors duration-300">
-                OnePiece Studio
+                OneViz Studio
               </span>
             </button>
 

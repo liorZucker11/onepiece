@@ -41,7 +41,7 @@ const LEGAL = {
     he: {
       title: 'תנאי שימוש',
       sections: [
-        { body: 'האתר מציג עבודות, הדמיות ותכנים שנוצרו על ידי OnePiece Studio, והם מוגנים בזכויות יוצרים. אין להעתיק, להשתמש או להפיץ תכנים מהאתר ללא אישור מראש.' },
+        { body: 'האתר מציג עבודות, הדמיות ותכנים שנוצרו על ידי OneViz Studio, והם מוגנים בזכויות יוצרים. אין להעתיק, להשתמש או להפיץ תכנים מהאתר ללא אישור מראש.' },
         { body: 'התוכן באתר נועד למטרות מידע והתרשמות בלבד, ואינו מהווה התחייבות מכל סוג.' },
         { body: 'הסטודיו אינו אחראי לנזקים ישירים או עקיפים שעלולים להיגרם כתוצאה מהשימוש באתר.' },
         { body: 'ייתכן והאתר יכיל קישורים לאתרים חיצוניים — האחריות על התוכן בהם אינה של הסטודיו.' },
@@ -52,7 +52,7 @@ const LEGAL = {
     en: {
       title: 'Terms of Use',
       sections: [
-        { body: 'This website presents works, visualizations and content created by OnePiece Studio, which are protected by copyright. No content may be copied, used or distributed without prior permission.' },
+        { body: 'This website presents works, visualizations and content created by OneViz Studio, which are protected by copyright. No content may be copied, used or distributed without prior permission.' },
         { body: 'The content on the website is for informational and impressional purposes only, and does not constitute a commitment of any kind.' },
         { body: 'The studio is not responsible for direct or indirect damages that may result from use of the website.' },
         { body: 'The website may contain links to external websites — the studio is not responsible for their content.' },
@@ -164,8 +164,8 @@ export default function Footer() {
                   </a>
                 </li>
                 <li>
-                  <a href="mailto:onepiece01com@gmail.com" className="font-sans text-[13px] font-light text-[#c0bcb8] hover:text-[#c8a96c] transition-colors duration-300">
-                    onepiece01com@gmail.com
+                  <a href="mailto:onevizam@gmail.com" className="font-sans text-[13px] font-light text-[#c0bcb8] hover:text-[#c8a96c] transition-colors duration-300">
+                    onevizam@gmail.com
                   </a>
                 </li>
                 <li>
@@ -193,7 +193,7 @@ export default function Footer() {
             transition={{ duration: 0.7, delay: 0.22, ease: [0.22, 1, 0.36, 1] }}
           >
             <p className="font-sans text-[11px] text-[#909090]">
-              © {year} OnePiece Studio. {isHe ? 'כל הזכויות שמורות.' : 'All rights reserved.'}
+              © {year} OneViz Studio. {isHe ? 'כל הזכויות שמורות.' : 'All rights reserved.'}
             </p>
             <div className="flex items-center gap-6">
               <button
@@ -219,7 +219,7 @@ export default function Footer() {
             transition={{ duration: 1.1, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
           >
             <p className="font-serif font-thin text-center leading-none text-[#0c0c0c]" style={{ fontSize: 'clamp(3rem, 12vw, 10rem)' }}>
-              OnePiece
+              OneViz
             </p>
           </motion.div>
 

@@ -3,7 +3,7 @@ import './globals.css';
 
 // REPLACE: Update all metadata fields with your actual studio information
 export const metadata: Metadata = {
-  title: 'OnePiece Studio — הדמיות אדריכליות',
+  title: 'OneViz Studio — הדמיות אדריכליות',
   description:
     'סטודיו פרימיום להדמיות אדריכליות. הדמיות חוץ ופנים, אנימציות קולנועיות, תוכניות שיווק, עבודות גרפיות וסיורים וירטואליים.',
   keywords: [
@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     'הדמיות חוץ',
   ],
   openGraph: {
-    title: 'OnePiece Studio — הדמיות אדריכליות',
+    title: 'OneViz Studio — הדמיות אדריכליות',
     description: 'הדמיות אדריכליות פרימיום. מקונספט ועד מסירה קולנועית.',
     type: 'website',
   },

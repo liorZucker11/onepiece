@@ -44,9 +44,9 @@ export default function About() {
               style={{ fontSize: 'clamp(2.6rem, 5.5vw, 4.2rem)' }}
             >
               {isHe ? (
-                <>הסיפור שמאחורי<br /><span className="text-[#c8a96c] block text-center">One Piece</span></>
+                <>הסיפור שמאחורי<br /><span className="text-[#c8a96c] block text-center">One Viz</span></>
               ) : (
-                <>The Story Behind<br /><span className="text-[#c8a96c] block text-center">One Piece</span></>
+                <>The Story Behind<br /><span className="text-[#c8a96c] block text-center">One Viz</span></>
               )}
             </h2>
           </Reveal>
@@ -56,15 +56,15 @@ export default function About() {
           <Reveal delay={0.12}>
             <p className="font-sans text-[15px] font-light leading-[2.1] text-[#c8c4c0]">
               {isHe
-                ? 'OnePiece הוא סטודיו בוטיק להדמיות אדריכליות, הפועל מתוך אמונה שכל פרויקט מתחיל בסיפור. הסטודיו אינו מסתפק בהצגת מבנים — הוא יוצר תחושה, אווירה וחזון עוד לפני שהפרויקט נבנה.'
-                : 'OnePiece is a boutique architectural visualization studio, operating from the belief that every project begins with a story. The studio doesn\'t settle for presenting buildings — it creates a feeling, atmosphere and vision before the project is even built.'}
+                ? 'OneViz הוא סטודיו בוטיק להדמיות אדריכליות, הפועל מתוך אמונה שכל פרויקט מתחיל בסיפור. הסטודיו אינו מסתפק בהצגת מבנים — הוא יוצר תחושה, אווירה וחזון עוד לפני שהפרויקט נבנה.'
+                : 'OneViz is a boutique architectural visualization studio, operating from the belief that every project begins with a story. The studio doesn\'t settle for presenting buildings — it creates a feeling, atmosphere and vision before the project is even built.'}
             </p>
           </Reveal>
           <Reveal delay={0.2}>
             <p className="font-sans text-[15px] font-light leading-[2.1] text-[#c8c4c0]">
               {isHe
-                ? 'עבור OnePiece, כל פרויקט הוא סיפור ייחודי. באמצעות שילוב של חשיבה אדריכלית והבנה שיווקית, הסטודיו מייצר הדמיות שמחברות אנשים לפרויקט ומעבירות אותו בצורה ברורה, מדויקת ומשכנעת.'
-                : 'For OnePiece, every project is a unique story. Through a combination of architectural thinking and marketing understanding, the studio produces visualizations that connect people to the project and convey it clearly, precisely and persuasively.'}
+                ? 'עבור OneViz, כל פרויקט הוא סיפור ייחודי. באמצעות שילוב של חשיבה אדריכלית והבנה שיווקית, הסטודיו מייצר הדמיות שמחברות אנשים לפרויקט ומעבירות אותו בצורה ברורה, מדויקת ומשכנעת.'
+                : 'For OneViz, every project is a unique story. Through a combination of architectural thinking and marketing understanding, the studio produces visualizations that connect people to the project and convey it clearly, precisely and persuasively.'}
             </p>
           </Reveal>
         </div>
@@ -83,8 +83,8 @@ export default function About() {
             <Reveal delay={0.1}>
               <p className="font-sans text-[15px] font-light leading-[2.1] text-[#c8c4c0]">
                 {isHe
-                  ? 'אני אביב מינצברג, מנכ"ל ומייסד OnePiece Studio, עם מעל 12 שנות ניסיון בעולם האדריכלות וההדמיות. הנדסאי אדריכלות בהכשרתי, עם רקע מקצועי הכולל ניסיון במשרדי אדריכלות בתחום ההדמיות ובמסגרת השירות הצבאי.'
-                  : 'I am Aviv Minzberg, CEO and founder of OnePiece Studio, with over 12 years of experience in architecture and visualization. An architect by training, with a professional background that includes experience in architectural visualization firms and during military service.'}
+                  ? 'אני אביב מינצברג, מנכ"ל ומייסד OneViz Studio, עם מעל 12 שנות ניסיון בעולם האדריכלות וההדמיות. הנדסאי אדריכלות בהכשרתי, עם רקע מקצועי הכולל ניסיון במשרדי אדריכלות בתחום ההדמיות ובמסגרת השירות הצבאי.'
+                  : 'I am Aviv Minzberg, CEO and founder of OneViz Studio, with over 12 years of experience in architecture and visualization. An architect by training, with a professional background that includes experience in architectural visualization firms and during military service.'}
               </p>
             </Reveal>
             <Reveal delay={0.18}>
@@ -118,7 +118,7 @@ export default function About() {
                   {isHe ? 'אביב מינצברג' : 'Aviv Minzberg'}
                 </p>
                 <p className="section-label mt-1">
-                  {isHe ? 'מנכ"ל One Piece' : 'CEO of One Piece'}
+                  {isHe ? 'מנכ"ל One Viz' : 'CEO of One Viz'}
                 </p>
               </div>
             </Reveal>

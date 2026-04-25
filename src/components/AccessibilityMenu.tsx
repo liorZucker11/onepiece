@@ -246,7 +246,7 @@ export default function AccessibilityMenu() {
                   {isHe ? (
                     <>
                       <p>
-                        <span className="text-[#ffffff]">OnePiece Studio</span> פועלת להנגשת אתר האינטרנט שלה בהתאם לחוק שוויון זכויות לאנשים עם מוגבלות, התשנ״ח–1998, ולתקנות הנגישות שנקבעו מכוחו.
+                        <span className="text-[#ffffff]">OneViz Studio</span> פועלת להנגשת אתר האינטרנט שלה בהתאם לחוק שוויון זכויות לאנשים עם מוגבלות, התשנ״ח–1998, ולתקנות הנגישות שנקבעו מכוחו.
                       </p>
                       <p>האתר שואף לעמוד בדרישות תקן WCAG 2.1 ברמת AA.</p>
 
@@ -283,7 +283,7 @@ export default function AccessibilityMenu() {
                       <p className="text-[#ffffff]">רכזת נגישות: ליאור צוקר מינצברג</p>
                       <div className="flex flex-col gap-1">
                         <a href="tel:0506887763" className="text-[#c8a96c] hover:text-[#ffffff] transition-colors">050-688-7763</a>
-                        <a href="mailto:onepiece01com@gmail.com" className="text-[#c8a96c] hover:text-[#ffffff] transition-colors">onepiece01com@gmail.com</a>
+                        <a href="mailto:onevizam@gmail.com" className="text-[#c8a96c] hover:text-[#ffffff] transition-colors">onevizam@gmail.com</a>
                       </div>
                       <p className="text-[#707070] text-[11px]">
                         זמן טיפול בפניות: עד 7 ימי עסקים. | תאריך עדכון אחרון: אפריל 2026
@@ -292,7 +292,7 @@ export default function AccessibilityMenu() {
                   ) : (
                     <>
                       <p>
-                        <span className="text-[#ffffff]">OnePiece Studio</span> is committed to making its website accessible in accordance with the Equal Rights for Persons with Disabilities Law (1998) and the accessibility regulations enacted under it.
+                        <span className="text-[#ffffff]">OneViz Studio</span> is committed to making its website accessible in accordance with the Equal Rights for Persons with Disabilities Law (1998) and the accessibility regulations enacted under it.
                       </p>
                       <p>This site aims to conform to WCAG 2.1 Level AA.</p>
 
@@ -328,7 +328,7 @@ export default function AccessibilityMenu() {
                       <p className="text-[#ffffff]">Accessibility Coordinator: Lior Zuker Minzberg</p>
                       <div className="flex flex-col gap-1">
                         <a href="tel:0506887763" className="text-[#c8a96c] hover:text-[#ffffff] transition-colors">050-688-7763</a>
-                        <a href="mailto:onepiece01com@gmail.com" className="text-[#c8a96c] hover:text-[#ffffff] transition-colors">onepiece01com@gmail.com</a>
+                        <a href="mailto:onevizam@gmail.com" className="text-[#c8a96c] hover:text-[#ffffff] transition-colors">onevizam@gmail.com</a>
                       </div>
                       <p className="text-[#707070] text-[11px]">
                         Response time: up to 7 business days. | Last updated: April 2026
