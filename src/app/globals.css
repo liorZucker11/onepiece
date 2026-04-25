@@ -30,7 +30,6 @@
 html {
   scroll-behavior: smooth;
   background-color: var(--color-bg);
-  /* Prevent horizontal overflow */
   overflow-x: hidden;
 }
 
@@ -40,7 +39,12 @@ body {
   font-family: 'Heebo', 'Inter', system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  overflow-x: hidden;
+}
+
+/* iOS Safari fix: force fixed header onto its own GPU layer */
+header {
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
 }
 
 /* ─── Custom Scrollbar ──────────────────────────────────────────────────── */

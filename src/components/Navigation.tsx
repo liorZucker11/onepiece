@@ -2,33 +2,9 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import Image from 'next/image';
 import { useLanguage } from '@/contexts/LanguageContext';
 
-function LangToggle() {
-  const { lang, setLang } = useLanguage();
-  const isHe = lang === 'he';
-  return (
-    <div className="relative flex border border-[#3a3a3a] overflow-hidden" style={{ fontSize: '9px' }}>
-      <motion.div
-        className="absolute top-0 bottom-0 w-1/2 bg-[#c8a96c]/15 border border-[#c8a96c]/50"
-        animate={{ x: isHe ? '0%' : '100%' }}
-        transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
-      />
-      <button
-        onClick={() => setLang('he')}
-        className={`relative z-10 px-3 py-1 font-sans tracking-[0.06em] transition-colors duration-200 ${isHe ? 'text-[#c8a96c]' : 'text-[#a0a09c] hover:text-[#ffffff]'}`}
-      >
-        עברית
-      </button>
-      <button
-        onClick={() => setLang('en')}
-        className={`relative z-10 px-3 py-1 font-sans tracking-[0.06em] transition-colors duration-200 ${!isHe ? 'text-[#c8a96c]' : 'text-[#a0a09c] hover:text-[#ffffff]'}`}
-      >
-        English
-      </button>
-    </div>
-  );
-}
 
 export default function Navigation() {
   const { lang } = useLanguage();
@@ -83,6 +59,7 @@ export default function Navigation() {
           'fixed top-0 left-0 right-0 z-50 transition-all duration-500',
           scrolled ? 'bg-[#080808]/85 backdrop-blur-md border-b border-[#1c1c1c]' : 'bg-transparent',
         ].join(' ')}
+        transformTemplate={(_, t) => `${t} translateZ(0)`}
         initial={{ y: -80, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
@@ -94,12 +71,17 @@ export default function Navigation() {
           >
 
             {/* ── Logo ── */}
-            <button onClick={scrollToTop} className="flex items-center gap-3 group" aria-label="Go to top">
-              <div className="w-8 h-8 border border-[#c8a96c]/60 flex items-center justify-center group-hover:border-[#c8a96c] transition-colors duration-300 flex-shrink-0">
-                <span className="font-serif text-[11px] text-[#c8a96c] leading-none select-none tracking-wide">OV</span>
-              </div>
-              <span className="hidden sm:block font-sans text-[11px] tracking-[0.15em] text-[#ffffff]/80 group-hover:text-[#ffffff] transition-colors duration-300">
-                OneViz Studio
+            <button onClick={scrollToTop} className="flex items-center gap-2.5 group" aria-label="Go to top">
+              <Image
+                src="/OneViz_logo_white.png"
+                alt="OneViz Studio"
+                width={44}
+                height={44}
+                className="object-contain opacity-90 group-hover:opacity-100 transition-opacity duration-300"
+                priority
+              />
+              <span className="font-sans text-[13px] tracking-[0.12em] text-white/80 group-hover:text-white transition-colors duration-300">
+                One<span className="text-[#c8a96c]">V</span>iz
               </span>
             </button>
 

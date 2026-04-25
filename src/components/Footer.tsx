@@ -212,15 +212,18 @@ export default function Footer() {
           </motion.div>
 
           <motion.div
-            className="mt-8 overflow-hidden select-none pointer-events-none"
+            className="mt-8 overflow-hidden select-none pointer-events-none flex justify-center"
             aria-hidden
             initial={{ opacity: 0, y: 40 }}
             animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
             transition={{ duration: 1.1, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
           >
-            <p className="font-serif font-thin text-center leading-none text-[#0c0c0c]" style={{ fontSize: 'clamp(3rem, 12vw, 10rem)' }}>
-              OneViz
-            </p>
+            <img
+              src="/OneViz_logo_text_white.png"
+              alt=""
+              className="w-full max-w-lg opacity-[0.09]"
+              style={{ objectFit: 'contain' }}
+            />
           </motion.div>
 
         </div>
