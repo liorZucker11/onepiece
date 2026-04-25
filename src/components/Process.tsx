@@ -81,9 +81,9 @@ export default function Process() {
                 style={{ fontSize: 'clamp(2.4rem, 4.5vw, 3.8rem)' }}
               >
                 {isHe ? (
-                  <>התהליך שמאחורי<br /><span className="font-bold text-[#c8a96c]">החוויה</span></>
+                  <>תהליך העבודה<br />עם <span className="font-bold text-[#c8a96c]">One Viz</span></>
                 ) : (
-                  <>The Process Behind<br /><span className="font-bold text-[#c8a96c]">the Experience</span></>
+                  <>The Work Process<br />with <span className="font-bold text-[#c8a96c]">One Viz</span></>
                 )}
               </h2>
 
